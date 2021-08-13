@@ -12,6 +12,8 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace TaskAppBackend.Controllers.API
 {
+    [AllowAnonymous]
+    [RoutePrefix("api/UserApi")]
     public class UserAPIController : ApiController
     {
 
@@ -19,7 +21,7 @@ namespace TaskAppBackend.Controllers.API
 
         [ResponseType(typeof(User))]
         [HttpPost]
-        [Route("api/UserApi")]
+        [Route("Create")]
         public IHttpActionResult CreateUser(User user)
         {
             if(!ModelState.IsValid)
@@ -45,7 +47,7 @@ namespace TaskAppBackend.Controllers.API
         }
 
         [HttpPost]
-        [Route("api/UserApi/Login")]
+        [Route("Login")]
         [ResponseType(typeof(Login))]
         public IHttpActionResult LoginUser(Login login)
         {
@@ -55,9 +57,10 @@ namespace TaskAppBackend.Controllers.API
             var user = db.Users.SingleOrDefault(u => u.Email == login.Email);
 
             if(user == null || !BC.Verify(login.Password, user.Password))
-               return BadRequest("Contraseña o usuario incorrecto");
+               return Unauthorized();
 
-            return Ok(user);
+            var token = TokenGenerator.GenerateTokenJwt(user.Email);
+            return Ok(token);
         }
 
     }
