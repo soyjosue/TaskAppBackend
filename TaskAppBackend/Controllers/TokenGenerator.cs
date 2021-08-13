@@ -10,7 +10,7 @@ namespace TaskAppBackend.Controllers
 {
     internal static class TokenGenerator
     {
-        public static string GenerateTokenJwt(string username)
+        public static string GenerateTokenJwt(string username, int id)
         {
             // Obteniendo las appsettings de token JWT
             var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];
@@ -22,7 +22,7 @@ namespace TaskAppBackend.Controllers
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
             // Creando el claimsIdentity
-            ClaimsIdentity claimsIdentify = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) });
+            ClaimsIdentity claimsIdentify = new ClaimsIdentity(new[] { new Claim("Email", username), new Claim("Id", id.ToString()) });
 
             var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
             var jwtSecurityToken = tokenHandler.CreateJwtSecurityToken(

@@ -193,6 +193,7 @@
     <Compile Include="Helpers\DataBaseHelper.cs" />
     <Compile Include="Migration\Configuration.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Proyect.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

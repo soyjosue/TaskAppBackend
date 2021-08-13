@@ -59,8 +59,10 @@ namespace TaskAppBackend.Controllers.API
             if(user == null || !BC.Verify(login.Password, user.Password))
                return Unauthorized();
 
-            var token = TokenGenerator.GenerateTokenJwt(user.Email);
-            return Ok(token);
+            var token = TokenGenerator.GenerateTokenJwt(user.Email, user.Id);
+            return Ok(new {
+                Token = token
+            });
         }
 
     }
