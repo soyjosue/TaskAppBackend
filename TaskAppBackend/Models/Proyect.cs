@@ -9,7 +9,7 @@ namespace TaskAppBackend.Models
     public class Proyect
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "El titulo es obligatorio")]
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
 

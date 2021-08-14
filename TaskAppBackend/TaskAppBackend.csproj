@@ -182,6 +182,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\ProyectAPIController.cs" />
     <Compile Include="Controllers\API\UserAPIController.cs" />
     <Compile Include="Controllers\APP\HomeController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
@@ -191,6 +192,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataBaseHelper.cs" />
+    <Compile Include="Helpers\Literals.cs" />
+    <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Migration\Configuration.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Proyect.cs" />
