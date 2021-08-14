@@ -24,9 +24,9 @@ namespace TaskAppBackend.Controllers.API
         {
             var userToken = Utils.GetUserOfToken(request);
 
-            var proyects = (from proyect in db.Proyects
+            var proyects = from proyect in db.Proyects
                             where proyect.UserId == userToken.Id
-                            select proyect).ToList();
+                            select proyect;
 
             return Ok(proyects);
         }
@@ -44,20 +44,23 @@ namespace TaskAppBackend.Controllers.API
             if (!DataBaseHelper.IsExistUser(db, userToken.Email))
                 return BadRequest("Usuario no existe");
 
-            var user =  db.Users.FirstOrDefault(us => us.Id == userToken.Id);
-
             proyect.CreatedAt = DateTime.Now;
-            proyect.UserId = user.Id;
+            proyect.UserId = userToken.Id;
 
             try
             {
                 db.Proyects.Add(proyect);
                 db.SaveChanges();
 
-                return Ok(proyect);
-            } catch(Exception err)
+                return Ok(new
+                {
+                    Message = "Proyecto creado correctamente",
+                    Proyect = proyect
+                });
+            }
+            catch (Exception err)
             {
-                return BadRequest(err.Message);       
+                return BadRequest(err.Message);
             }
         }
 
@@ -78,13 +81,22 @@ namespace TaskAppBackend.Controllers.API
             if (proyect.UserId != userToken.Id)
                 return BadRequest("No tienes permiso para eliminar este proyecto");
 
+            var taks = from task in db.Tasks
+                        where task.ProyectId == proyect.Id
+                        select task;
+
             try
             {
+                db.Tasks.RemoveRange(taks);
                 db.Proyects.Remove(proyect);
                 db.SaveChanges();
 
-                return Ok(proyect);
-            }catch(Exception err)
+                return Ok(new { 
+                    Message = "Proyecto eliminado correctamente",
+                    Proyect = proyect
+                });
+            }
+            catch (Exception err)
             {
                 return BadRequest(err.Message);
             }

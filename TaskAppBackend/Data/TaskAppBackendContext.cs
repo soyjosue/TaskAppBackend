@@ -21,6 +21,7 @@ namespace TaskAppBackend.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Proyect> Proyects { get; set; }
+        public DbSet<Task> Tasks { get; set; }
 
     }
 }
