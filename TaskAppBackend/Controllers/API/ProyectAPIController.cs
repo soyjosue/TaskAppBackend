@@ -235,6 +235,29 @@ namespace TaskAppBackend.Controllers.API
             }
         }
 
+        [HttpGet]
+        [Route("Shared/{proyectId}")]
+        public IHttpActionResult GetSharedCode(int proyectId, HttpRequestMessage request)
+        {
+            var userToken = Utils.GetUserOfToken(request);
+            if (!DataBaseHelper.IsExistUser(db, userToken.Email))
+                return BadRequest("El usuario no existe");
+
+            var proyect = db.Proyects.Where(p => p.Id == proyectId).FirstOrDefault();
+            if (proyect == null)
+                return NotFound();
+
+            if (proyect.UserId != userToken.Id)
+                return BadRequest("No tiene permiso para ver el codigo");
+
+            var sharedCode = db.SharedProyects.Where(sp => sp.ProyectId == proyectId).FirstOrDefault();
+
+            if (sharedCode == null)
+                return NotFound();
+
+            return Ok(sharedCode);
+        }
+
         [HttpPut]
         [Route("Shared/{id}")]
         [ResponseType(typeof(SharedProyect))]
