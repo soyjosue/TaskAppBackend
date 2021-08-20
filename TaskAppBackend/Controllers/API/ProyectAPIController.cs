@@ -107,7 +107,10 @@ namespace TaskAppBackend.Controllers.API
             {
                 db.Tasks.RemoveRange(taks);
                 db.Shareds.RemoveRange(shareds);
-                db.SharedProyects.Remove(sharedProyect);
+
+                if (sharedProyect != null)
+                    db.SharedProyects.Remove(sharedProyect);
+
                 db.Proyects.Remove(proyect);
                 db.SaveChanges();
 
