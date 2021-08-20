@@ -205,15 +205,15 @@ namespace TaskAppBackend.Controllers.API
         }
 
         [HttpDelete]
-        [Route("RemoveMember/{proyectId}")]
-        public IHttpActionResult RemoveMemberProyect(int proyectId, HttpRequestMessage request)
+        [Route("RemoveMember/{proyectId}/{userId}")]
+        public IHttpActionResult RemoveMemberProyect(int proyectId,int userId, HttpRequestMessage request)
         {
             var userToken = Utils.GetUserOfToken(request);
 
             if (!DataBaseHelper.IsExistUser(db, userToken.Email))
                 return BadRequest("El usuario no existe");
 
-            var shared = db.Shareds.FirstOrDefault(s => s.ProyectId == proyectId && s.UserId == userToken.Id);
+            var shared = db.Shareds.FirstOrDefault(s => s.ProyectId == proyectId && s.UserId == userId);
 
             if (shared == null)
                 return BadRequest("El usuario no se encuetra como miembro del proyecto.");
