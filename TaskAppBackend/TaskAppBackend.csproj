@@ -199,6 +199,8 @@
     <Compile Include="Migration\Configuration.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Proyect.cs" />
+    <Compile Include="Models\Shared.cs" />
+    <Compile Include="Models\SharedProyect.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,6 +215,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\TaskAppb - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\WebApi20210812114844 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

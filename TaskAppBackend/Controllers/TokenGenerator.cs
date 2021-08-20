@@ -16,7 +16,7 @@ namespace TaskAppBackend.Controllers
             var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];
             var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
             var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
-            var expireTime = ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTE"];
+            var expireTime = ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES"];
 
             var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -30,7 +30,7 @@ namespace TaskAppBackend.Controllers
                 issuer : issuerToken,
                 subject : claimsIdentify,
                 notBefore : DateTime.UtcNow,
-                expires : DateTime.UtcNow.AddMinutes(30),
+                expires : DateTime.UtcNow.AddMinutes(Int32.Parse(expireTime)),
                 signingCredentials : signingCredentials
             );
 
